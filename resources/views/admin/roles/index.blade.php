@@ -7,6 +7,9 @@
     .width-90 {
       width:90px;
     }
+    .width-70 {
+      width:70px;
+    }
   </style>
 @endpush
 
@@ -17,12 +20,12 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1>Products</h1>
+              <h1>Roles</h1>
             </div>
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item">Products</li>
+                <li class="breadcrumb-item">Roles</li>
                 <li class="breadcrumb-item active">Listing</li>
               </ol>
             </div>
@@ -38,11 +41,11 @@
             <div class="card card-primary card-outline">
               <div class="card-header">
                 <h3 class="card-title">
-                  Products list
+                  Roles list
                 </h3>
                 <span class="text-center">
-                  @can('product-create')
-                    <a class="btn btn-success" href="{{ route('admin.products.create') }}"> Create New Product</a>
+                  @can('role-create')
+                    <a class="btn btn-success" href="{{ route('admin.roles.create') }}"> Create New Role</a>
                   @endcan
                 </span>
               </div>
@@ -52,43 +55,27 @@
                   <thead>
                   <tr>
                     <th>#</th>
-                    <th>Name</th>
-                    <th>Category</th>
-                    <th>Thumbnail</th>
-                    <th>Status</th>
+                    <th>Title</th>
+                    <th class="width-70 text-center">Status</th>
                     <th class="text-center width-90">Action</th>
                   </tr>
                   </thead>
                   <tbody>
                     <?php $counter = 1; ?>
-                    @foreach ($products as $product)
+                    @foreach ($roles as $role)
                       <tr>
                         <td>@php echo $counter++ @endphp</td>
-                        <td>{{ $product->name }}</td>
-                        <td><img src="{{ asset('/public/images/products/' . $product->thumbnail) }}" width="100px"></td>
-                        <td>
-                          @php
-                            $result_names = '';
-                            foreach ($product->product_categories as $product_category) {
-                              $result_names .= $product_category->name.', ';
-                            }
-                            $result_names = rtrim($result_names, ', ');
-                            if(count($product->product_categories) > 1){
-                              $result_names = $result_names. '.';
-                            }
-                            echo $result_names;
-                          @endphp
-                        </td>
-                        <td>{{ $product->status }}</td>
+                        <td>{{ $role->name }}</td>
+                        <td class="{{ ( $role->status  == 'active' ) ? 'text-success' : 'text-danger' }} text-center">{{ $role->status }}</td>
                         <td class="text-center">
-                          <form action="{{ route('admin.products.destroy',$product->id) }}" method="POST">
-                            <a class="btn btn-info rounded-circle btn-sm" href="{{ route('admin.products.show',$product->id) }}"><i class="fas fa-eye"></i></a>
-                            @can('product-edit')
-                              <a class="btn btn-primary rounded-circle btn-sm" href="{{ route('admin.products.edit',$product->id) }}"><i class="fas fa-edit"></i></a>
+                          <form action="{{ route('admin.roles.destroy',$role->id) }}" method="POST">
+                            <a class="btn btn-info rounded-circle btn-sm" href="{{ route('admin.roles.show',$role->id) }}"><i class="fas fa-eye"></i></a>
+                            @can('role-edit')
+                              <a class="btn btn-primary rounded-circle btn-sm" href="{{ route('admin.roles.edit',$role->id) }}"><i class="fas fa-edit"></i></a>
                             @endcan
                             @csrf
                             @method('DELETE')
-                            @can('product-delete')
+                            @can('role-delete')
                               <button type="submit" class="btn btn-danger show_confirm rounded-circle btn-sm"><i class="fas fa-trash-alt"></i></button>
                             @endcan
                         </form>
@@ -100,9 +87,7 @@
                   <tfoot>
                     <tr>
                       <th>#</th>
-                      <th>Name</th>
-                      <th>Category</th>
-                      <th>Thumbnail</th>
+                      <th>Title</th>
                       <th>Status</th>
                       <th class="text-center">Action</th>
                     </tr>

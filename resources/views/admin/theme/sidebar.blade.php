@@ -30,9 +30,57 @@
               </p>
             </a>
           </li>
+          <li class="nav-item {{ (Route::currentRouteName() === 'admin.users.create' || Route::currentRouteName() === 'admin.users.index' ? 'menu-is-opening menu-open' : '') }}">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-users"></i>
+              <p>
+                Users
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('admin.users.create')}}" class="nav-link {{ (Route::currentRouteName() === 'admin.users.create' ? 'active' : '')}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Create</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('admin.users.index')}}" class="nav-link {{ (Route::currentRouteName() === 'admin.users.index' ? 'active' : '')}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Listing</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item {{ (Route::currentRouteName() === 'admin.roles.create' || Route::currentRouteName() === 'admin.roles.index' ? 'menu-is-opening menu-open' : '') }}">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-user-tag"></i>
+              <p>
+                Roles
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('admin.roles.create')}}" class="nav-link {{ (Route::currentRouteName() === 'admin.roles.create' ? 'active' : '')}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Create</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('admin.roles.index')}}" class="nav-link {{ (Route::currentRouteName() === 'admin.roles.index' ? 'active' : '')}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Listing</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
           <li class="nav-item {{ (Route::currentRouteName() === 'admin.products.create' || Route::currentRouteName() === 'admin.products.index' ? 'menu-is-opening menu-open' : '') }}">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <i class="nav-icon fas fa-toolbox"></i>
               <p>
                 Products
                 <i class="right fas fa-angle-left"></i>
