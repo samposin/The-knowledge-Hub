@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Admin;
 use DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Admin\Role;
+// use App\Models\Admin\Role;
+use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
 
@@ -36,7 +37,7 @@ class RoleController extends Controller
     public function create()
     {
         $permissions = Permission::all();
-        return view('admin.roles.create', 'permissions');
+        return view('admin.roles.create', compact('permissions'));
     }
 
     /**
@@ -55,6 +56,7 @@ class RoleController extends Controller
         $input = $request->except(['_token']);     
         $input['guard_name'] = 'web';   
         $role = Role::create($input);
+        $role->syncPermissions($request->input('permissions'));
         return redirect()->route('admin.roles.index')->with('success','Role created successfully.');
     }
 

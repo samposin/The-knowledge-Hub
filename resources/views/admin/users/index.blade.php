@@ -40,14 +40,12 @@
           <div class="col-md-12">
             <div class="card card-primary card-outline">
               <div class="card-header">
-                <h3 class="card-title">
-                  Users list
+                <h3 class="card-title pt-1">
+                  User list
                 </h3>
-                <span class="text-center">
                   @can('user-create')
-                    <a class="btn btn-success" href="{{ route('admin.users.create') }}"> Create New User</a>
+                    <a class="btn btn-success float-right btn-sm" href="{{ route('admin.users.create') }}"> <i class="fas fa-plus"></i> Add New</a>
                   @endcan
-                </span>
               </div>
               <div class="card-body pad table-responsive">
                 @include('admin.theme.notification')
@@ -57,7 +55,8 @@
                     <th>#</th>
                     <th>Name</th>
                     <th>Email</th>
-                    {{-- <th>Thumbnail</th> --}}
+                    <th>Thumbnail</th>
+                    <th>Role</th>
                     <th class="width-70 text-center">Status</th>
                     <th class="text-center width-90">Action</th>
                   </tr>
@@ -69,7 +68,20 @@
                         <td>@php echo $counter++ @endphp</td>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
-                        {{-- <td><img src="{{ asset('/public/images/users/' . $user->thumbnail) }}" width="100px"></td> --}}
+                        <td><img src="{{ asset('/public/images/users/' . $user->thumbnail) }}" width="100px"></td>
+                        <td>
+                          @php
+                            $role_names = '';
+                            foreach ($user->getRoleNames() as $role) {
+                              $role_names .= $role.', ';
+                            }
+                            $role_names = rtrim($role_names, ', ');
+                            if(count($user->getRoleNames()) > 1){
+                              $role_names = $role_names. '.';
+                            }
+                            echo $role_names;
+                          @endphp
+                        </td>
                         <td class="{{ ( $user->status  == 'active' ) ? 'text-success' : 'text-danger' }} text-center">{{ $user->status }}</td>
                         <td class="text-center">
                           <form action="{{ route('admin.users.destroy',$user->id) }}" method="POST">
@@ -93,7 +105,8 @@
                       <th>#</th>
                       <th>Name</th>
                       <th>Email</th>
-                      {{-- <th>Thumbnail</th> --}}
+                      <th>Thumbnail</th>
+                      <th>Role</th>
                       <th>Status</th>
                       <th class="text-center">Action</th>
                     </tr>

@@ -64,17 +64,29 @@
                   </div>
 
                   <div class="row">
-                    <div class="col-sm-12">
-                      <div class="form-group">
-                        <strong>Permission:</strong>
-                        <br/>
-                        @foreach($permissions as $permission)
-                            <label><input type="checkbox" name="permissions[]" value="{{ $permission->id }}" {{ in_array($permission->id, $rolePermissions) ? 'checked' : '' }}> &nbsp;{{ $permission->name }}</label>
-                        <br/>
-                        @endforeach
-                    </div>
-                    </div>
+                    <h4 class="text-center text-info">Permissions</h4>
+                    <br/>
+                    @php
+                      $p_header_prev = "old";
+                      foreach($permissions as $permission):
+                        $str_arr = explode ("-", $permission->name);
+                        $p_header = $str_arr[0];
+                        if( $p_header != $p_header_prev ):
+                          echo "<div class='col-sm-12 text-capitalize'><strong>".$p_header."</strong></div>";
+                          $p_header_prev = $p_header;
+                        endif
+                      @endphp
+                      <div class="col-sm-3">
+                        <div class="form-check form-check-inline">
+                          <input type="checkbox" class="form-check-input" id="{{ $permission->id }}" name="permissions[]" value="{{ $permission->id }}" {{ in_array($permission->id, $rolePermissions) ? 'checked' : '' }}>
+                          <label class="form-check-label" for="{{ $permission->id }}">{{ $permission->name }}</label>
+                        </div>
+                      </div>
+                      @php
+                        endforeach
+                      @endphp
                   </div>
+
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">

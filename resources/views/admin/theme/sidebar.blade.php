@@ -12,10 +12,10 @@
       <!-- Sidebar user (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="{!! asset('public/admin-theme/dist/img/user2-160x160.jpg') !!}" class="img-circle elevation-2" alt="User Image">
+          <img src="{!! asset('public/images/users/'. auth()->user()->thumbnail) !!}" class="img-circle elevation-2" alt="{{auth()->user()->name }}'s Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a href="#" class="d-block">{{ auth()->user()->name }}</a>
         </div>
       </div>
       <!-- Sidebar Menu -->
@@ -71,6 +71,30 @@
               </li>
               <li class="nav-item">
                 <a href="{{route('admin.roles.index')}}" class="nav-link {{ (Route::currentRouteName() === 'admin.roles.index' ? 'active' : '')}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Listing</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item {{ (Route::currentRouteName() === 'admin.permissions.create' || Route::currentRouteName() === 'admin.permissions.index' ? 'menu-is-opening menu-open' : '') }}">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-tags"></i>
+              <p>
+                Permissions
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('admin.permissions.create')}}" class="nav-link {{ (Route::currentRouteName() === 'admin.permissions.create' ? 'active' : '')}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Create</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('admin.permissions.index')}}" class="nav-link {{ (Route::currentRouteName() === 'admin.permissions.index' ? 'active' : '')}}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Listing</p>
                 </a>

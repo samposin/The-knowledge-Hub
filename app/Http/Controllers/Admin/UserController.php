@@ -25,10 +25,7 @@ class UserController extends Controller
      */
     public function index()
     {
-
-        // with('role')->
         $users = User::latest()->get();
-        dd($users->first()->getRoleNames()->first());
         return view('admin.users.index', compact('users'));
     }
 
@@ -54,7 +51,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
-            'role_id' => 'required',
+            'roles' => 'required',
             'password' => 'required|confirmed|min:6',
             'thumbnail' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
@@ -67,10 +64,11 @@ class UserController extends Controller
             $image->move($destinationPath, $userImage);
             $input['thumbnail'] = "$userImage";
         }
+        $input['password'] = bcrypt($input['password']);
         unset($input['confirm_password']);
         
         $user = User::create($input);
-        // $user->assignRole($input['roles']);
+        $user->assignRole($input['roles']);
         return redirect()->route('admin.users.index')->with('success','User created successfully.');
     }
 
@@ -93,8 +91,9 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        $roles = Role::where('status', 'active')->latest()->get();
-        return view('admin.users.edit',compact('user', 'roles'));
+        $roles = Role::pluck('name','name')->all();
+        $userRoles = $user->roles->pluck('name')->all();
+        return view('admin.users.edit', compact('user', 'roles', 'userRoles'));
     }
     /**
      * Update the specified resource in storage.
@@ -119,6 +118,7 @@ class UserController extends Controller
             $thumbImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
             $image->move($destinationPath, $thumbImage);
             $input['thumbnail'] = "$thumbImage";
+            if($old_file != 'avatar.jpg')
             delete_file($old_file);
         }else{
             unset($input['thumbnail']);
@@ -138,6 +138,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        if($user->thumbnail != 'avatar.jpg')
         delete_file('public/images/users/'.$user->thumbnail);
         $user->delete();
         return redirect()->route('admin.users.index')

@@ -40,14 +40,12 @@
           <div class="col-md-12">
             <div class="card card-primary card-outline">
               <div class="card-header">
-                <h3 class="card-title">
+                <h3 class="card-title pt-1">
                   Roles list
                 </h3>
-                <span class="text-center">
                   @can('role-create')
-                    <a class="btn btn-success" href="{{ route('admin.roles.create') }}"> Create New Role</a>
+                    <a class="btn btn-success float-right btn-sm" href="{{ route('admin.roles.create') }}"> <i class="fas fa-plus"></i> Add New</a>
                   @endcan
-                </span>
               </div>
               <div class="card-body pad table-responsive">
                 @include('admin.theme.notification')

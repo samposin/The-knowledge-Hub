@@ -16,6 +16,7 @@ class UserSeeder extends Seeder
         User::create([
             "name" => "Kamran",
             "email" => "kamran@aisoftwares.co.in",
+            "thumbnail" => "avatar.jpg",
             "password" => bcrypt("123456"),
             "created_at" => date("Y-m-d H:i:s"),
             "updated_at" => date("Y-m-d H:i:s"),
@@ -26,6 +27,7 @@ class UserSeeder extends Seeder
             "name" => "shekhar",
             "email" => "shekhar@aisoftwares.co.in",
             "password" => bcrypt("123456"),
+            "thumbnail" => "avatar.jpg",
             "created_at" => date("Y-m-d H:i:s"),
             "updated_at" => date("Y-m-d H:i:s"),
 
@@ -35,6 +37,7 @@ class UserSeeder extends Seeder
             "name" => "akash",
             "email" => "akash@aisoftwares.co.in",
             "password" => bcrypt("123456"),
+            "thumbnail" => "avatar.jpg",
             "created_at" => date("Y-m-d H:i:s"),
             "updated_at" => date("Y-m-d H:i:s"),
 

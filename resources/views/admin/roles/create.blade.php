@@ -7,7 +7,6 @@
   }
   </style>
 @endpush
-
 <!-- Select2 -->
 <link rel="stylesheet" href="{!! asset('public/admin-theme/plugins/select2/css/select2.min.css') !!}">
 <link rel="stylesheet" href="{!! asset('public/admin-theme/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') !!}">
@@ -30,7 +29,6 @@
           </div>
         </div><!-- /.container-fluid -->
       </section>
-  
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
@@ -58,19 +56,30 @@
                       </div>
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="col-sm-12">
-                      <div class="form-group">
-                        <strong>Permission:</strong>
-                        <br/>
-                        @foreach($permissions as $permission)
-                            <label><input type="checkbox" name="permissions[]" value="{{ $permission->id }}" checked> &nbsp;{{ $permission->name }}</label>
-                        <br/>
-                        @endforeach
-                    </div>
-                    </div>
-                  </div>
 
+                  <div class="row">
+                    <h4 class="text-center text-info">Permissions</h4>
+                    <br/>
+                    @php
+                      $p_header_prev = "old";
+                      foreach($permissions as $permission):
+                        $str_arr = explode ("-", $permission->name);
+                        $p_header = $str_arr[0];
+                        if( $p_header != $p_header_prev ):
+                          echo "<div class='col-sm-12 text-capitalize'><strong>".$p_header."</strong></div>";
+                          $p_header_prev = $p_header;
+                        endif
+                      @endphp
+                      <div class="col-sm-3">
+                        <div class="form-check form-check-inline">
+                          <input type="checkbox" class="form-check-input" id="{{ $permission->id }}" name="permissions[]" value="{{ $permission->id }}" checked>
+                          <label class="form-check-label" for="{{ $permission->id }}">{{ $permission->name }}</label>
+                        </div>
+                      </div>
+                      @php
+                        endforeach
+                      @endphp
+                  </div>
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">

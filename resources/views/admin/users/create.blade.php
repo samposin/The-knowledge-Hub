@@ -72,12 +72,12 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="roles">Roles</label>
-                        <select class="select2" id="roles" name="role_id" data-placeholder="Select User's Role" style="width: 100%;">
+                        <select class="select2" id="roles" name="roles[]" data-placeholder="Select User's Role" style="width: 100%;">
                             @foreach ($roles as $role)
                                 <option value="{{ $role->id }}">{{ $role->name }}</option>
                             @endforeach
                         </select>
-                        @error('role_id')
+                        @error('roles')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                       </div>

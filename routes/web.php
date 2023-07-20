@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\PermissionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,8 +25,9 @@ Route::post('registration-process', [AuthController::class, 'registration_proces
 
 Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
 
-    Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
+    Route::resource('roles', RoleController::class);
+    Route::resource('permissions', PermissionController::class);
 
     Route::get('dashboard', [AuthController::class, 'dashboard'])->name('dashboard'); 
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');    

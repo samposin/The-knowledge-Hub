@@ -7,6 +7,12 @@
     .width-90 {
       width:90px;
     }
+    .width-70 {
+      width:70px;
+    }
+    .width-35 {
+      width: 35px;
+    }
   </style>
 @endpush
 
@@ -17,12 +23,12 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1>Products</h1>
+              <h1>Permissions</h1>
             </div>
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item">Products</li>
+                <li class="breadcrumb-item">Permissions</li>
                 <li class="breadcrumb-item active">Listing</li>
               </ol>
             </div>
@@ -38,55 +44,40 @@
             <div class="card card-primary card-outline">
               <div class="card-header">
                 <h3 class="card-title pt-1">
-                  Products list
+                  Permission list
                 </h3>
-                  @can('product-create')
-                    <a class="btn btn-success float-right btn-sm" href="{{ route('admin.products.create') }}"> <i class="fas fa-plus"></i> Add New</a>
+                  @can('permission-create')
+                    <a class="btn btn-success float-right btn-sm" href="{{ route('admin.permissions.create') }}"> <i class="fas fa-plus"></i> Add New</a>
                   @endcan
+
               </div>
               <div class="card-body pad table-responsive">
                 @include('admin.theme.notification')
                 <table id="example2" class="table table-bordered table-hover">
                   <thead>
                   <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Category</th>
-                    <th>Thumbnail</th>
-                    <th>Status</th>
+                    <th class="width-35">#</th>
+                    <th>Title</th>
+                    <th class="width-70 text-center">Guard</th>
                     <th class="text-center width-90">Action</th>
                   </tr>
                   </thead>
                   <tbody>
                     <?php $counter = 1; ?>
-                    @foreach ($products as $product)
+                    @foreach ($permissions as $permission)
                       <tr>
                         <td>@php echo $counter++ @endphp</td>
-                        <td>{{ $product->name }}</td>
-                        <td><img src="{{ asset('/public/images/products/' . $product->thumbnail) }}" width="100px"></td>
-                        <td>
-                          @php
-                            $result_names = '';
-                            foreach ($product->product_categories as $product_category) {
-                              $result_names .= $product_category->name.', ';
-                            }
-                            $result_names = rtrim($result_names, ', ');
-                            if(count($product->product_categories) > 1){
-                              $result_names = $result_names. '.';
-                            }
-                            echo $result_names;
-                          @endphp
-                        </td>
-                        <td>{{ $product->status }}</td>
+                        <td>{{ $permission->name }}</td>
+                        <td class="text-center">{{ $permission->guard_name }}</td>
                         <td class="text-center">
-                          <form action="{{ route('admin.products.destroy',$product->id) }}" method="POST">
-                            <a class="btn btn-info rounded-circle btn-sm" href="{{ route('admin.products.show',$product->id) }}"><i class="fas fa-eye"></i></a>
-                            @can('product-edit')
-                              <a class="btn btn-primary rounded-circle btn-sm" href="{{ route('admin.products.edit',$product->id) }}"><i class="fas fa-edit"></i></a>
+                          <form action="{{ route('admin.permissions.destroy',$permission->id) }}" method="POST">
+                            <a class="btn btn-info rounded-circle btn-sm" href="{{ route('admin.permissions.show',$permission->id) }}"><i class="fas fa-eye"></i></a>
+                            @can('permission-edit')
+                              <a class="btn btn-primary rounded-circle btn-sm" href="{{ route('admin.permissions.edit',$permission->id) }}"><i class="fas fa-edit"></i></a>
                             @endcan
                             @csrf
                             @method('DELETE')
-                            @can('product-delete')
+                            @can('permission-delete')
                               <button type="submit" class="btn btn-danger show_confirm rounded-circle btn-sm"><i class="fas fa-trash-alt"></i></button>
                             @endcan
                         </form>
@@ -98,9 +89,7 @@
                   <tfoot>
                     <tr>
                       <th>#</th>
-                      <th>Name</th>
-                      <th>Category</th>
-                      <th>Thumbnail</th>
+                      <th>Title</th>
                       <th>Status</th>
                       <th class="text-center">Action</th>
                     </tr>
