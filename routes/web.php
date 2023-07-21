@@ -2,11 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController;
-use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ProjectController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,14 +26,16 @@ Route::get('registration', [AuthController::class, 'registration'])->name('regis
 Route::post('registration-process', [AuthController::class, 'registration_process'])->name('register.process'); 
 
 Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
-
+    
     Route::resource('users', UserController::class);
     Route::resource('roles', RoleController::class);
     Route::resource('permissions', PermissionController::class);
-
+    Route::resource('categories', CategoryController::class);
+    Route::resource('products', ProductController::class);
+    Route::resource('projects', ProjectController::class);
+    
     Route::get('dashboard', [AuthController::class, 'dashboard'])->name('dashboard'); 
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');    
-    Route::resource('products', ProductController::class);
 });
 
 Route::get('test', function () {

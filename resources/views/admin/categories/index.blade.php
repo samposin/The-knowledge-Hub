@@ -23,12 +23,12 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1>Permissions</h1>
+              <h1>Categories</h1>
             </div>
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item">Permissions</li>
+                <li class="breadcrumb-item">Categories</li>
                 <li class="breadcrumb-item active">Listing</li>
               </ol>
             </div>
@@ -44,10 +44,10 @@
             <div class="card card-primary card-outline">
               <div class="card-header">
                 <h3 class="card-title pt-1">
-                  Permission list
+                  category list
                 </h3>
-                  @can('permission-create')
-                    <a class="btn btn-success float-right btn-sm" href="{{ route('admin.permissions.create') }}"> <i class="fas fa-plus"></i> Add New</a>
+                  @can('category-create')
+                    <a class="btn btn-success float-right btn-sm" href="{{ route('admin.categories.create') }}"> <i class="fas fa-plus"></i> Add New</a>
                   @endcan
 
               </div>
@@ -64,20 +64,20 @@
                   </thead>
                   <tbody>
                     <?php $counter = 1; ?>
-                    @foreach ($permissions as $permission)
+                    @foreach ($categories as $category)
                       <tr>
                         <td>@php echo $counter++ @endphp</td>
-                        <td>{{ $permission->name }}</td>
-                        <td class="text-center">{{ $permission->guard_name }}</td>
+                        <td>{{ $category->name }}</td>
+                        <td class="text-center">{{ $category->status }}</td>
                         <td class="text-center">
-                          <form action="{{ route('admin.permissions.destroy',$permission->id) }}" method="POST">
-                            <a class="btn btn-info rounded-circle btn-sm" href="{{ route('admin.permissions.show',$permission->id) }}"><i class="fas fa-eye"></i></a>
-                            @can('permission-edit')
-                              <a class="btn btn-primary rounded-circle btn-sm" href="{{ route('admin.permissions.edit',$permission->id) }}"><i class="fas fa-edit"></i></a>
+                          <form action="{{ route('admin.categories.destroy',$category->id) }}" method="POST">
+                            <a class="btn btn-info rounded-circle btn-sm" href="{{ route('admin.categories.show',$category->id) }}"><i class="fas fa-eye"></i></a>
+                            @can('category-edit')
+                              <a class="btn btn-primary rounded-circle btn-sm" href="{{ route('admin.categories.edit',$category->id) }}"><i class="fas fa-edit"></i></a>
                             @endcan
                             @csrf
                             @method('DELETE')
-                            @can('permission-delete')
+                            @can('category-delete')
                               <button type="submit" class="btn btn-danger show_confirm rounded-circle btn-sm"><i class="fas fa-trash-alt"></i></button>
                             @endcan
                         </form>

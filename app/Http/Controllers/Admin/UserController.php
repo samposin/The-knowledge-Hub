@@ -5,8 +5,9 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
-// use App\Models\Admin\Role;
+use App\Models\Admin\Product;
 use Spatie\Permission\Models\Role;
+use DB;
 
 class UserController extends Controller
 {
@@ -37,7 +38,8 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::where('status', 'active')->latest()->get();
-        return view('admin.users.create', compact('roles'));
+        $projects = Product::where('status', 'active')->latest()->get(['id', 'name']);
+        return view('admin.users.create', compact('roles', 'projects'));
     }
 
     /**
@@ -69,6 +71,9 @@ class UserController extends Controller
         
         $user = User::create($input);
         $user->assignRole($input['roles']);
+        if(isset($input['projects'])){
+            $user->products->attach($input['projects']);
+        }
         return redirect()->route('admin.users.index')->with('success','User created successfully.');
     }
 
@@ -93,7 +98,9 @@ class UserController extends Controller
     {
         $roles = Role::pluck('name','name')->all();
         $userRoles = $user->roles->pluck('name')->all();
-        return view('admin.users.edit', compact('user', 'roles', 'userRoles'));
+        $projects = Product::where('status', 'active')->latest()->get(['id', 'name']);
+        $userProjects = optional(optional($user->products)->pluck('name'))->all() ? $user->products->pluck('id')->all() : [];
+        return view('admin.users.edit', compact('user', 'roles', 'userRoles', 'projects', 'userProjects'));
     }
     /**
      * Update the specified resource in storage.
@@ -107,7 +114,7 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email|unique:users,email,'.$user->id,
-            'role_id' => 'required'
+            'status' => 'required'
         ]);
   
         $input = $request->except(['_token']);
@@ -118,14 +125,17 @@ class UserController extends Controller
             $thumbImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
             $image->move($destinationPath, $thumbImage);
             $input['thumbnail'] = "$thumbImage";
-            if($old_file != 'avatar.jpg')
+            if($input['old_thumbnail'] != 'avatar.jpg')
             delete_file($old_file);
         }else{
             unset($input['thumbnail']);
         }
         unset($input['old_thumbnail']);
         $user->update($input);
-
+        DB::table('model_has_roles')->where('model_id', $user->id)->delete();
+        $user->assignRole($request->input('roles'));
+        DB::table('user_products')->where('user_id', $user->id)->delete();
+        $user->products->attach($input['projects']);
         return redirect()->route('admin.users.index')
                         ->with('success','User updated successfully');
     }

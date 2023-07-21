@@ -78,9 +78,21 @@
                           <label class="custom-file-label" for="customFile">Choose file</label>
                         </div>
                       </div>
+                      <div class="text-center">
+                        <img id="previewImg" class="d-none img-responsive" src="" alt="Image" />
+                      </div>
                     </div>
-                    <div class="col-sm-6 text-center">
-                      <img id="previewImg" class="d-none img-responsive" src="" alt="Image" />
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="status">Status</label>
+                        <select class="select2" id="status" name="status" data-placeholder="Select Status" style="width: 100%;">
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                        </select>
+                        @error('status')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                      </div>
                     </div>
                   </div>
                   {{-- <div class="form-group mb-0">

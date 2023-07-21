@@ -23,12 +23,12 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1>Permissions</h1>
+              <h1>Projects</h1>
             </div>
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item">Permissions</li>
+                <li class="breadcrumb-item">Projects</li>
                 <li class="breadcrumb-item active">Listing</li>
               </ol>
             </div>
@@ -44,57 +44,36 @@
             <div class="card card-primary card-outline">
               <div class="card-header">
                 <h3 class="card-title pt-1">
-                  Permission list
+                  Projects list
                 </h3>
-                  @can('permission-create')
-                    <a class="btn btn-success float-right btn-sm" href="{{ route('admin.permissions.create') }}"> <i class="fas fa-plus"></i> Add New</a>
-                  @endcan
-
               </div>
               <div class="card-body pad table-responsive">
-                @include('admin.theme.notification')
-                <table id="example2" class="table table-bordered table-hover">
-                  <thead>
-                  <tr>
-                    <th class="width-35">#</th>
-                    <th>Title</th>
-                    <th class="width-70 text-center">Status</th>
-                    <th class="text-center width-90">Action</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                    <?php $counter = 1; ?>
-                    @foreach ($permissions as $permission)
-                      <tr>
-                        <td>@php echo $counter++ @endphp</td>
-                        <td>{{ $permission->name }}</td>
-                        <td class="text-center">{{ $permission->guard_name }}</td>
-                        <td class="text-center">
-                          <form action="{{ route('admin.permissions.destroy',$permission->id) }}" method="POST">
-                            <a class="btn btn-info rounded-circle btn-sm" href="{{ route('admin.permissions.show',$permission->id) }}"><i class="fas fa-eye"></i></a>
-                            @can('permission-edit')
-                              <a class="btn btn-primary rounded-circle btn-sm" href="{{ route('admin.permissions.edit',$permission->id) }}"><i class="fas fa-edit"></i></a>
-                            @endcan
-                            @csrf
-                            @method('DELETE')
-                            @can('permission-delete')
-                              <button type="submit" class="btn btn-danger show_confirm rounded-circle btn-sm"><i class="fas fa-trash-alt"></i></button>
-                            @endcan
-                        </form>
-                        </td>
-                      </tr>
+                <div class="row">
+                  @if($projects->count() > 0)
+                    @foreach($projects as $project)
+                      <div class="col-sm-3">
+                        <div class="card">
+                          <img class="card-img-top img-responsive" src="{{ asset('/public/images/products/' . $project->thumbnail) }}"  alt="Card image">
+                          <div class="card-body">
+                            <h4 class="card-title mt-3">{{ $project->name }}</h4>
+                            {{-- <p class="card-text">Some example text some example text. John Doe is an architect and engineer</p> --}}
+                            <a href="#" class="btn btn-primary mt-3">See Project</a>
+                          </div>
+                        </div>
+                      </div>
                     @endforeach
-
-                  </tbody>
-                  <tfoot>
-                    <tr>
-                      <th>#</th>
-                      <th>Title</th>
-                      <th>Status</th>
-                      <th class="text-center">Action</th>
-                    </tr>
-                  </tfoot>
-                </table>
+                    @else
+                    <div class="container">
+                      <div class="row">
+                          <div class="col-sm-12">
+                            <h4 class="text-info text-center">
+                              No project is assign to you.
+                            </h4>
+                          </div>
+                      </div>
+                    </div>
+                  @endif
+                </div>
               </div>
               <!-- /.card-body -->
               <!-- /.card -->

@@ -1,18 +1,19 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Permission;
+use App\Models\Admin\Category;
 
-class PermissionController extends Controller
+class CategoryController extends Controller
 {
     function __construct()
     {
-         $this->middleware('permission:permission-list|permission-create|permission-edit|permission-delete', ['only' => ['index','show']]);
-         $this->middleware('permission:permission-create', ['only' => ['create','store']]);
-         $this->middleware('permission:permission-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:permission-delete', ['only' => ['destroy']]);
+         $this->middleware('permission:category-list|category-create|category-edit|category-delete', ['only' => ['index','show']]);
+         $this->middleware('permission:category-create', ['only' => ['create','store']]);
+         $this->middleware('permission:category-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:category-delete', ['only' => ['destroy']]);
     }
     /**
      * Display a listing of the resource.
@@ -21,8 +22,8 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        $permissions = Permission::latest()->get();
-        return view('admin.permissions.index', compact('permissions'));
+        $categories = Category::latest()->get();
+        return view('admin.categories.index', compact('categories'));
     }
 
     /**
@@ -32,7 +33,7 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        return view('admin.permissions.create');
+        return view('admin.categories.create');
     }
 
     /**
@@ -48,8 +49,8 @@ class PermissionController extends Controller
         ]);
         
         $input = $request->except(['_token']);
-        Permission::create($input);
-        return redirect()->route('admin.permissions.index')->with('success','Permission created successfully.');
+        Category::create($input);
+        return redirect()->route('admin.categories.index')->with('success','Category created successfully.');
     }
 
     /**
@@ -58,9 +59,9 @@ class PermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Permission $permission)
+    public function show(Category $category)
     {
-        return view('admin.permissions.show', compact('permission'));
+        return view('admin.categories.show', compact('category'));
     }
 
     /**
@@ -69,9 +70,9 @@ class PermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Permission $permission)
+    public function edit(Category $category)
     {
-        return view('admin.permissions.edit', compact('permission'));
+        return view('admin.categories.edit', compact('category'));
     }
     /**
      * Update the specified resource in storage.
@@ -80,16 +81,16 @@ class PermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Permission $permission)
+    public function update(Request $request, Category $category)
     {
         $this->validate($request, [
             'name' => 'required'
         ]);
   
         $input = $request->except(['_token']);
-        $permission->update($input);
-        return redirect()->route('admin.permissions.index')
-                        ->with('success','Permission updated successfully');
+        $category->update($input);
+        return redirect()->route('admin.categories.index')
+                        ->with('success','Category updated successfully.');
     }
 
     /**
@@ -98,10 +99,10 @@ class PermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Permission $permission)
+    public function destroy(Category $category)
     {
-        $permission->delete();
-        return redirect()->route('admin.permissions.index')
-                        ->with('success','Permission deleted successfully');
+        $category->delete();
+        return redirect()->route('admin.categories.index')
+                        ->with('success','Category deleted successfully.');
     }
 }

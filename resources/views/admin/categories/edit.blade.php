@@ -1,16 +1,16 @@
 @push('style')
 <!-- summernote -->
-  <link rel="stylesheet" href="{!! asset('public/admin-theme/plugins/summernote/summernote-bs4.min.css') !!}">
-  <style>
-    #previewImg{
-      max-width: 180px;
-    }
+<link rel="stylesheet" href="{!! asset('public/admin-theme/plugins/summernote/summernote-bs4.min.css') !!}">
+<style>
+  #previewImg{
+    max-width: 180px;
+  }
   </style>
 @endpush
+
 <!-- Select2 -->
 <link rel="stylesheet" href="{!! asset('public/admin-theme/plugins/select2/css/select2.min.css') !!}">
 <link rel="stylesheet" href="{!! asset('public/admin-theme/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') !!}">
-
 @extends('admin.layout')
 @section('content')
     <!-- Content Header (Page header) -->
@@ -18,13 +18,13 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1>Products</h1>
+              <h1>Permissions</h1>
             </div>
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item">Products</li>
-                <li class="breadcrumb-item active">edit</li>
+                <li class="breadcrumb-item">Permission</li>
+                <li class="breadcrumb-item active">Edit</li>
               </ol>
             </div>
           </div>
@@ -40,57 +40,27 @@
               <div class="card-header">
                 <h3 class="card-title">
                   {{-- <i class="fas fa-edit"></i> --}}
-                  Product Edit
+                  Permission Edit
                 </h3>
               </div>
               <!-- form start -->
-              <form action="{{ route('admin.products.update',$product->id) }}" method="post" enctype="multipart/form-data"> 
+              <form action="{{ route('admin.permissions.update', $permission->id) }}"  id="quickForm" method="post" enctype="multipart/form-data"> 
                 @csrf
                 @method('PUT')
+                @csrf
                 <div class="card-body pad">
+
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
-                        <label for="productName">Product Name</label>
-                        <input type="text" name="name" class="form-control" id="productName" placeholder="Enter Product Name" value="{{ $product->name }}">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" class="form-control" id="name" placeholder="Enter Category Title" value="{{ $category->name }}">
+                        @error('name')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                       </div>
                     </div>
 
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="categories">Product Categories</label>
-                        <select class="select2" id="categories" name="categories[]" multiple="multiple" data-placeholder="Select a product categories" style="width: 100%;">
-                            @foreach ($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
-                            @endforeach
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  @push('script')
-                    <script>
-                        $('#categories').val(@json($product->product_categories->pluck('id')));
-                    </script>
-                  @endpush
-                  {{-- $product->product_categories->pluck('id') --}}
-                  <div class="form-group">
-                    <label for="description">Description</label>
-                    <textarea id="description" name="description" required>{!!$product->description !!}</textarea>
-                  </div>
-                  <div class="row">
-                    <div class="col-sm-6">
-                      <div class="form-group">
-                        <label for="customFile">Thumbnail</label>
-                        <div class="custom-file">
-                          <input type="file" name="thumbnail" class="custom-file-input" id="customFile" onchange="readURL(this);">
-                          <label class="custom-file-label" for="customFile">Choose file</label>
-                        </div>
-                      </div>
-                      <div class="text-center">
-                        <img id="previewImg" class="img-responsive" src="{{ asset('/public/images/products/' . $product->thumbnail) }}" alt="Image" />
-                        <input type="hidden" name="old_thumbnail" value="{{$product->thumbnail}}">
-                      </div>
-                    </div>
                     <div class="col-sm-6">
                       <div class="form-group">
                         <label for="status">Status</label>
@@ -167,7 +137,7 @@
           required: true,
           minlength: 5
         },
-        thumbnail: {
+        status: {
           required: true
         }
       },

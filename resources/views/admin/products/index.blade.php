@@ -63,7 +63,6 @@
                       <tr>
                         <td>@php echo $counter++ @endphp</td>
                         <td>{{ $product->name }}</td>
-                        <td><img src="{{ asset('/public/images/products/' . $product->thumbnail) }}" width="100px"></td>
                         <td>
                           @php
                             $result_names = '';
@@ -75,8 +74,9 @@
                               $result_names = $result_names. '.';
                             }
                             echo $result_names;
-                          @endphp
+                            @endphp
                         </td>
+                        <td><img src="{{ asset('/public/images/products/' . $product->thumbnail) }}" width="100px"></td>
                         <td>{{ $product->status }}</td>
                         <td class="text-center">
                           <form action="{{ route('admin.products.destroy',$product->id) }}" method="POST">

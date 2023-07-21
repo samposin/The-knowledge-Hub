@@ -114,6 +114,20 @@
                     </div>
                   </div>
 
+                  <div class="row mb-2">
+                    <div class="col-sm-12">
+                      <h4 class="text-info">Projects</h4>
+                    </div>
+                    @foreach($projects as $project)
+                      <div class="col-sm-3">
+                        <div class="form-check form-check-inline">
+                          <input type="checkbox" class="form-check-input" id="{{ $project->id }}" name="projects[]" value="{{ $project->id }}">
+                          <label class="form-check-label" for="{{ $project->id }}">{{ $project->name }}</label>
+                        </div>
+                      </div>
+                    @endforeach
+                  </div>
+
                   <div class="row">
                     <div class="col-sm-6">
                       <div class="form-group">

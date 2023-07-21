@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 use DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-// use App\Models\Admin\Role;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
