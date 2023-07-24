@@ -57,7 +57,7 @@
                           <div class="card-body">
                             <h4 class="card-title mt-3">{{ $project->name }}</h4>
                             {{-- <p class="card-text">Some example text some example text. John Doe is an architect and engineer</p> --}}
-                            <a href="#" class="btn btn-primary mt-3">See Project</a>
+                            <a href="{{ route('admin.projects.show', $project->id) }}" class="btn btn-primary mt-3">See Project</a>
                           </div>
                         </div>
                       </div>

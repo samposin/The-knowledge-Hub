@@ -111,6 +111,7 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        // dd($request->all());
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email|unique:users,email,'.$user->id,
@@ -134,8 +135,7 @@ class UserController extends Controller
         $user->update($input);
         DB::table('model_has_roles')->where('model_id', $user->id)->delete();
         $user->assignRole($request->input('roles'));
-        DB::table('user_products')->where('user_id', $user->id)->delete();
-        $user->products->attach($input['projects']);
+        $user->products()->sync($input['projects']);
         return redirect()->route('admin.users.index')
                         ->with('success','User updated successfully');
     }

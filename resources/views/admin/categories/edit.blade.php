@@ -18,12 +18,12 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1>Permissions</h1>
+              <h1>Categories</h1>
             </div>
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item">Permission</li>
+                <li class="breadcrumb-item">Categories</li>
                 <li class="breadcrumb-item active">Edit</li>
               </ol>
             </div>
@@ -40,11 +40,11 @@
               <div class="card-header">
                 <h3 class="card-title">
                   {{-- <i class="fas fa-edit"></i> --}}
-                  Permission Edit
+                  Category Edit
                 </h3>
               </div>
               <!-- form start -->
-              <form action="{{ route('admin.permissions.update', $permission->id) }}"  id="quickForm" method="post" enctype="multipart/form-data"> 
+              <form action="{{ route('admin.categories.update', $category->id) }}"  id="quickForm" method="post" enctype="multipart/form-data"> 
                 @csrf
                 @method('PUT')
                 @csrf

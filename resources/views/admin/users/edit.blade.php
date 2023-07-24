@@ -108,6 +108,8 @@
                     <div class="col-sm-12">
                       <h4 class="text-info">Projects</h4>
                     </div>
+                    {{-- below hiddend feild will aviod error while updating user with no project  --}}
+                    <input type="hidden" name="projects" value="">
                     @foreach($projects as $project)
                       <div class="col-sm-3">
                         <div class="form-check form-check-inline">

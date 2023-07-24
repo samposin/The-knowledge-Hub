@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Admin\Product;
 
 class ProjectController extends Controller
 {
@@ -33,8 +34,10 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(Request $request, $id)
     {
-        return view('admin.users.show', compact('user'));
+        $product = Product::find($id);
+        // dd($product);
+        return view('admin.projects.show', compact('product'));
     }
 }
