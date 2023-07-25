@@ -72,7 +72,7 @@ class UserController extends Controller
         $user = User::create($input);
         $user->assignRole($input['roles']);
         if(isset($input['projects'])){
-            $user->products->attach($input['projects']);
+            $user->products()->attach($input['projects']);
         }
         return redirect()->route('admin.users.index')->with('success','User created successfully.');
     }

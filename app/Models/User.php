@@ -9,10 +9,14 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use App\Models\Admin\Product;
+
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Contracts\Activity;
   
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, LogsActivity;
   
     /**
      * The attributes that are mass assignable.
@@ -27,6 +31,22 @@ class User extends Authenticatable
         'status',
         'password',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+        ->logAll()
+        // ->dontLogIfAttributesChangedOnly(['slug', 'updated_at'])
+        ->logOnlyDirty()
+        ->dontSubmitEmptyLogs()
+        ->useLogName('users');
+
+    }
+
+    public function tapActivity(Activity $activity, string $eventName)
+    {
+        $activity->description = "This model has been {$eventName} by {$activity->causer->name} of id = {$activity->causer->id}";
+    }
   
     /**
      * The attributes that should be hidden for serialization.

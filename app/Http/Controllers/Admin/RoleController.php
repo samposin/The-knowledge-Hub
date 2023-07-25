@@ -48,13 +48,13 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'status' => 'required'
+            'name' => 'required'
         ]);
         
-        $input = $request->except(['_token']);     
-        $input['guard_name'] = 'web';   
+        $input = $request->except(['_token', 'permissions']);
+        $input['guard_name'] = 'web';
         $role = Role::create($input);
+
         $role->syncPermissions($request->input('permissions'));
         return redirect()->route('admin.roles.index')->with('success','Role created successfully.');
     }
