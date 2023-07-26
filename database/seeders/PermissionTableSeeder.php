@@ -30,6 +30,8 @@ class PermissionTableSeeder extends Seeder
             'permission-edit',
             'permission-delete',
 
+            'activity-log-list',
+
             'category-list',
             'category-create',
             'category-edit',
@@ -40,8 +42,9 @@ class PermissionTableSeeder extends Seeder
             'product-edit',
             'product-delete',
             
-            'project-list',
-            'project-create'
+            'project-list'
+
+
         ];
        
         foreach ($permissions as $permission) {

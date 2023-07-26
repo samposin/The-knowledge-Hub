@@ -121,35 +121,35 @@
             </li>
           @endcan
           {{-- activity log links --}}
-          {{-- @canany(['activity-log-create', 'activity-log-list']) --}}
+          @canany(['activity-log-create', 'activity-log-list'])
           <li class="nav-item {{ (Route::currentRouteName() === 'admin.activity-log.create' || Route::currentRouteName() === 'admin.activity.log.index' ? 'menu-is-opening menu-open' : '') }}">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-tags"></i>
+              <i class="nav-icon fas fa-history"></i>
               <p>
                 Activity Log
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
-              {{-- @can('activity-log-create') --}}
+              @can('activity-log-create')
                 <li class="nav-item">
                   <a href="{{route('admin.activity-log.create')}}" class="nav-link {{ (Route::currentRouteName() === 'admin.activity-log.create' ? 'active' : '')}}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Create</p>
                   </a>
                 </li>
-              {{-- @endcan
-              @can('activity-log-list') --}}
+              @endcan
+              @can('activity-log-list')
                 <li class="nav-item">
                   <a href="{{route('admin.activity-log.index')}}" class="nav-link {{ (Route::currentRouteName() === 'admin.activity-log.index' ? 'active' : '')}}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Listing</p>
                   </a>
                 </li>
-              {{-- @endcan --}}
+              @endcan
             </ul>
           </li>
-        {{-- @endcan --}}
+        @endcan
           @canany(['category-create', 'category-list'])
             <li class="nav-item {{ (Route::currentRouteName() === 'admin.categories.create' || Route::currentRouteName() === 'admin.categories.index' ? 'menu-is-opening menu-open' : '') }}">
               <a href="#" class="nav-link">

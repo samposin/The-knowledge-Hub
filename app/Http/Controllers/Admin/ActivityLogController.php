@@ -8,6 +8,13 @@ use Spatie\Activitylog\Models\Activity;
 
 class ActivityLogController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:activity-log-list|activity-log-create|activity-log-edit|activity-log-delete', ['only' => ['index','show']]);
+         $this->middleware('permission:activity-log-create', ['only' => ['create','store']]);
+         $this->middleware('permission:activity-log-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:activity-log-delete', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,8 +22,9 @@ class ActivityLogController extends Controller
      */
     public function index()
     {
-        $activities = Activity::all();
-        dd($activities);
+        $activities = Activity::latest()->get();
+        // dd($activities);
+        return view('admin.activityLog.index', compact('activities'));
     }
 
     /**
