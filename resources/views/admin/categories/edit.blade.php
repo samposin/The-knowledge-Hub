@@ -74,6 +74,24 @@
                       </div>
                     </div>
                   </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="icon">Icon</label>
+                        <input type="text" name="icon" class="form-control" id="icon" placeholder="Enter Icon Name i-e fa-map-marker-alt, fa-mobile-alt" value="{{ $category->icon }}">
+                        @error('icon')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea id="description" name="description" required>{!! $category->description !!}</textarea>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">

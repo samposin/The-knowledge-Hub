@@ -14,7 +14,9 @@
   <!-- ** Plugins Needed for the Project ** -->
   <!-- Bootstrap -->
   <link rel="stylesheet" href="{!! asset('public/frontend-theme/plugins/bootstrap/bootstrap.min.css') !!}">
-  <link rel="stylesheet" href="{!! asset('public/frontend-theme/plugins/themify/css/themify-icons.css') !!}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{!! asset('public/admin-theme/plugins/fontawesome-free/css/all.min.css') !!}">
+  {{-- <link rel="stylesheet" href="{!! asset('public/frontend-theme/plugins/themify/css/themify-icons.css') !!}"> --}}
   <link rel="stylesheet" href="{!! asset('public/frontend-theme/plugins/counto/animate.css') !!}">
   <link rel="stylesheet" href="{!! asset('public/frontend-theme/plugins/aos/aos.css') !!}">
   <link rel="stylesheet" href="{!! asset('public/frontend-theme/plugins/owl-carousel/owl.carousel.min.css') !!}">

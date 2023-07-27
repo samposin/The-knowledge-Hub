@@ -17,7 +17,6 @@ class HomeController extends Controller
     {
         $product_categories = Category::where('status', 'active')->latest()->get();
         $products = Product::with('product_categories')->where('status', 'active')->latest()->get();
-        // dd($products, $product_categories);
         return view('frontend.home', compact('products', 'product_categories'));
     }
 
@@ -31,6 +30,11 @@ class HomeController extends Controller
     {
         $product = Product::with('product_categories')->where('slug', $slug)->first();
         return view('frontend.product_details', compact('product'));
+    }
+
+    public function category_products($slug){
+        $products = Product::with('product_categories')->where('slug', $slug)->get();
+        dd($products);
     }
 
     /**

@@ -23,7 +23,6 @@ class ActivityLogController extends Controller
     public function index()
     {
         $activities = Activity::latest()->get();
-        // dd($activities);
         return view('admin.activityLog.index', compact('activities'));
     }
 

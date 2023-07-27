@@ -46,6 +46,10 @@ Route::get('test', function () {
 });
 Route::get('/', [HomeController::class, 'index']);
 Route::get('home', [HomeController::class, 'index'])->name('home');
+Route::get('about-us', [HomeController::class, 'index'])->name('about-us');
+Route::get('lets-talk', [HomeController::class, 'index'])->name('lets-talk');
+Route::get('/{slug}', [HomeController::class, 'category_products'])->name('category.products');
+
 Route::get('product-details/{slug}', [HomeController::class, 'product_details'])->name('product.details');
 
 

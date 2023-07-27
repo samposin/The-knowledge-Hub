@@ -68,7 +68,7 @@
                         <td>{{ $activity->event }}</td>
                         <td>{{ $activity->description }}</td>
                         <td class="text-center">
-                          <a class="btn btn-info rounded-circle btn-sm" href="#" onclick="showActivityDetails(({{json_encode($activity)}}))"><i class="fas fa-eye"></i></a>
+                          <a class="btn btn-info rounded-circle btn-sm" href="javascript:void(0)" onclick="showActivityDetails(({{json_encode($activity)}}))"><i class="fas fa-eye"></i></a>
                         </td>
                       </tr>
                     @endforeach
@@ -118,21 +118,7 @@
                     </tr>
                   </thead>
                   <tbody id="modal-table-body">
-                    <tr>
-                      <td>John</td>
-                      <td>Doe</td>
-                      <td>john@example.com</td>
-                    </tr>
-                    <tr>
-                      <td>Mary</td>
-                      <td>Moe</td>
-                      <td>mary@example.com</td>
-                    </tr>
-                    <tr>
-                      <td>July</td>
-                      <td>Dooley</td>
-                      <td>july@example.com</td>
-                    </tr>
+                   
                   </tbody>
                 </table>
               </div>
@@ -149,7 +135,6 @@
 
     <script>
       function showActivityDetails(data) {
-          console.log(data);
           var dataToAppend = '';
           var attri = (data.properties?.attributes) ? data.properties?.attributes : {};
           var old_values = (data.properties?.old) ? data.properties?.old : {};
@@ -159,14 +144,13 @@
                             <td>${attri[key]}</td></tr>`;
           }
           if(Object.keys(old_values).length){
-            dataToAppend += `<tr><td colspan='2'></td>
-                            <td></td></tr>`;
+            dataToAppend += `<tr class="text-center text-info"><td colspan='2'><strong>Old</strong></td></tr>`;
           }
           for (const key1 in old_values) {
               dataToAppend += `<tr><td>${key1}</td>
                             <td>${old_values[key1]}</td></tr>`;
           }
-          $("#modal-header").val(data.log_name);
+          $("#modal-header").html(data.log_name);
           $("#modal-table-body").html(dataToAppend);
           $('#myModal').modal('show');
       }

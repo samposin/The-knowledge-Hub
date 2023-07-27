@@ -20,6 +20,7 @@ class Product extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
+        // ->logOnly(["id", "name", "slug", "thumbnail", "description", "status", "created_at", "updated_at", "product_categories"])
         ->logUnguarded()
         ->dontLogIfAttributesChangedOnly(['slug', 'updated_at'])
         ->logOnlyDirty()
