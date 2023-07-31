@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Admin\Product;
 use App\Models\Admin\ProductCategory;
+use App\Models\Admin\DetailProduct;
 use App\Models\Admin\Category;
 
 class ProductController extends Controller
@@ -25,12 +26,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-
-        // \DB::enableQueryLog();
         $products = Product::with('product_categories')->where('status', 'active')->latest()->get();
-        // $query = \DB::getQueryLog();
-        // dd(end($query));
-        // dd($products);
         return view('admin.products.index', compact('products'));
     }
 
@@ -55,8 +51,7 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'description' => 'required',
-            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'thumbnail' => 'image|mimes:jpeg,png,jpg,gif,svg'
         ]);
         
         $input = $request->except(['_token']);
@@ -73,6 +68,26 @@ class ProductController extends Controller
         $product = Product::create($input);
         $product->product_categories()->attach($categories);
         return redirect()->route('admin.products.index')->with('success','Product created successfully.');
+    }
+
+    public function add_details(Request $request){
+        $request->validate([
+            'position' => 'required',
+            'description' => 'required',
+            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg'
+        ]);
+        
+        $input = $request->except(['_token']);
+  
+        if ($image = $request->file('thumbnail')) {
+            $destinationPath = 'public/images/products/';
+            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->move($destinationPath, $profileImage);
+            $input['thumbnail'] = "$profileImage";
+        }
+        unset($input['files']);
+        $product = DetailProduct::create($input);
+        return redirect()->route('admin.products.index')->with('success','Product Detail created successfully.');
     }
 
     /**
@@ -108,8 +123,7 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'description' => 'required',
-            'thumbnail' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'thumbnail' => 'image|mimes:jpeg,png,jpg,gif,svg'
         ]);
   
         $input = $request->except(['_token']);
@@ -136,6 +150,14 @@ class ProductController extends Controller
 
         return redirect()->route('admin.products.index')
                         ->with('success','Product updated successfully');
+    }
+
+    public function product_detail_destroy(DetailProduct $detailProduct)
+    {
+        delete_file('public/images/products/'.$detailProduct->thumbnail);
+        $detailProduct->delete();
+        return redirect()->route('admin.products.index')
+                        ->with('success','Product deleted successfully');
     }
 
     /**

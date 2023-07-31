@@ -34,6 +34,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::resource('permissions', PermissionController::class);
     Route::resource('categories', CategoryController::class);
     Route::resource('products', ProductController::class);
+    Route::post('product/add-details', [ProductController::class, 'add_details'])->name('products.add_details');
+    Route::delete('product/detail-destroy/{detailProduct}', [ProductController::class, 'product_detail_destroy'])->name('products.delete_details');
     Route::resource('projects', ProjectController::class);
     Route::resource('activity-log', ActivityLogController::class);
     
@@ -48,7 +50,7 @@ Route::get('/', [HomeController::class, 'index']);
 Route::get('home', [HomeController::class, 'index'])->name('home');
 Route::get('about-us', [HomeController::class, 'index'])->name('about-us');
 Route::get('lets-talk', [HomeController::class, 'index'])->name('lets-talk');
-Route::get('/{slug}', [HomeController::class, 'category_products'])->name('category.products');
+Route::get('category/{slug}', [HomeController::class, 'category_products'])->name('category.products');
 
 Route::get('product-details/{slug}', [HomeController::class, 'product_details'])->name('product.details');
 

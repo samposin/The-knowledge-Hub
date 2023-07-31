@@ -52,7 +52,7 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="productName">Product Name</label>
-                        <input type="text" name="name" class="form-control" id="productName" placeholder="Enter Product Name" value="{{ $product->name }}">
+                        <input type="text" name="name" class="form-control" id="productName" placeholder="Enter Product Name" value="{{ $product->name }}" required>
                       </div>
                     </div>
 
@@ -75,7 +75,7 @@
                   {{-- $product->product_categories->pluck('id') --}}
                   <div class="form-group">
                     <label for="description">Description</label>
-                    <textarea id="description" name="description" required>{!!$product->description !!}</textarea>
+                    <textarea id="description" name="description">{!!$product->description !!}</textarea>
                   </div>
                   <div class="row">
                     <div class="col-sm-6">
@@ -157,44 +157,44 @@
     //     alert( "Form successful submitted!" );
     //   }
     // });
-    $('#quickForm').validate({
-      rules: {
-        name: {
-          required: true,
-          minlength: 5
-        },
-        description: {
-          required: true,
-          minlength: 5
-        },
-        thumbnail: {
-          required: true
-        }
-      },
-      messages: {
-        name: {
-          required: "Please enter the product name",
-          email: "product name must be at least 5 characters long."
-        },
-        description: {
-          required: "Please provide a some description about product."
-        },
-        thumbnail : {
-          required: "Please upload product thumbnail."
-        },
-      },
-      errorElement: 'span',
-      errorPlacement: function (error, element) {
-        error.addClass('invalid-feedback');
-        element.closest('.form-group').append(error);
-      },
-      highlight: function (element, errorClass, validClass) {
-        $(element).addClass('is-invalid');
-      },
-      unhighlight: function (element, errorClass, validClass) {
-        $(element).removeClass('is-invalid');
-      }
-    });
+    // $('#quickForm').validate({
+    //   rules: {
+    //     name: {
+    //       required: true,
+    //       minlength: 3
+    //     },
+    //     description: {
+    //       required: true,
+    //       minlength: 5
+    //     },
+    //     thumbnail: {
+    //       required: true
+    //     }
+    //   },
+    //   messages: {
+    //     name: {
+    //       required: "Please enter the product name",
+    //       email: "product name must be at least 3 characters long."
+    //     },
+    //     description: {
+    //       required: "Please provide a some description about product."
+    //     },
+    //     thumbnail : {
+    //       required: "Please upload product thumbnail."
+    //     },
+    //   },
+    //   errorElement: 'span',
+    //   errorPlacement: function (error, element) {
+    //     error.addClass('invalid-feedback');
+    //     element.closest('.form-group').append(error);
+    //   },
+    //   highlight: function (element, errorClass, validClass) {
+    //     $(element).addClass('is-invalid');
+    //   },
+    //   unhighlight: function (element, errorClass, validClass) {
+    //     $(element).removeClass('is-invalid');
+    //   }
+    // });
   });
 </script>
 @endpush
