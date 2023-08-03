@@ -41,6 +41,7 @@ class ProductController extends Controller
         return view('admin.products.create', compact('categories'));
     }
 
+    
     /**
      * Store a newly created resource in storage.
      *
