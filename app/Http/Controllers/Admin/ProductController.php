@@ -40,7 +40,6 @@ class ProductController extends Controller
         $categories = Category::where('status', 'active')->latest()->get();
         return view('admin.products.create', compact('categories'));
     }
-
     
     /**
      * Store a newly created resource in storage.
